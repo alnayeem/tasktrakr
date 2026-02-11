@@ -30,7 +30,9 @@ migrate_working_dir/
 .flutter-plugins-dependencies
 .pub-cache/
 .pub/
+# Build outputs (except web for Cloudflare Pages deployment)
 /build/
+!/build/web/
 /coverage/
 
 # Symbolication related
