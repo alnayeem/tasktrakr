@@ -1,0 +1,27 @@
+# TaskTrakr AI Cloudflare Worker Configuration
+#
+# Deployment:
+# 1. Install wrangler: npm install -g wrangler
+# 2. Login: wrangler login
+# 3. Create KV namespace: wrangler kv:namespace create "RATE_LIMIT"
+# 4. Update the kv_namespaces id below with the output
+# 5. Set secret: wrangler secret put GEMINI_API_KEY
+# 6. Deploy: wrangler deploy
+
+name = "tasktrakr-ai"
+main = "worker.js"
+compatibility_date = "2024-01-01"
+
+# KV Namespaces for rate limiting
+# Run: wrangler kv:namespace create "RATE_LIMIT"
+# Then update the id below with the output
+kv_namespaces = [
+  { binding = "RATE_LIMIT", id = "1596990121064d43a9ac0a8fe2e8130c" }
+]
+
+# Environment variables (set via dashboard or wrangler secret)
+# GEMINI_API_KEY - Set using: wrangler secret put GEMINI_API_KEY
+
+[vars]
+# Non-secret variables can go here
+ENVIRONMENT = "production"

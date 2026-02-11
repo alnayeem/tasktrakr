@@ -1,0 +1,198 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../data/models/user_preferences.dart';
+import 'repository_providers.dart';
+
+/// State class for user preferences
+class PreferencesState {
+  final UserPreferences preferences;
+  final bool isLoading;
+  final String? error;
+
+  const PreferencesState({
+    required this.preferences,
+    this.isLoading = false,
+    this.error,
+  });
+
+  factory PreferencesState.initial() {
+    return PreferencesState(preferences: UserPreferences.defaults());
+  }
+
+  PreferencesState copyWith({
+    UserPreferences? preferences,
+    bool? isLoading,
+    String? error,
+  }) {
+    return PreferencesState(
+      preferences: preferences ?? this.preferences,
+      isLoading: isLoading ?? this.isLoading,
+      error: error,
+    );
+  }
+
+  // Convenience getters
+  String get language => preferences.language;
+  String get theme => preferences.theme;
+  bool get onboardingCompleted => preferences.onboardingCompleted;
+  bool get notificationsEnabled => preferences.notificationsEnabled;
+  String? get reminderTime => preferences.reminderTime;
+  bool get hapticsEnabled => preferences.hapticsEnabled;
+  bool get soundEnabled => preferences.soundEnabled;
+}
+
+/// Notifier for managing user preferences
+class PreferencesNotifier extends StateNotifier<PreferencesState> {
+  final Ref _ref;
+
+  PreferencesNotifier(this._ref) : super(PreferencesState.initial()) {
+    _loadPreferences();
+  }
+
+  /// Load preferences from repository
+  void _loadPreferences() {
+    state = state.copyWith(isLoading: true, error: null);
+    try {
+      final repository = _ref.read(preferencesRepositoryProvider);
+      final prefs = repository.getPreferences();
+      state = state.copyWith(preferences: prefs, isLoading: false);
+    } catch (e) {
+      state = state.copyWith(isLoading: false, error: e.toString());
+    }
+  }
+
+  /// Set language
+  Future<void> setLanguage(String languageCode) async {
+    try {
+      final repository = _ref.read(preferencesRepositoryProvider);
+      await repository.setLanguage(languageCode);
+      _loadPreferences();
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  /// Set theme
+  Future<void> setTheme(String theme) async {
+    try {
+      final repository = _ref.read(preferencesRepositoryProvider);
+      await repository.setTheme(theme);
+      _loadPreferences();
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  /// Complete onboarding
+  Future<void> completeOnboarding() async {
+    try {
+      final repository = _ref.read(preferencesRepositoryProvider);
+      await repository.completeOnboarding();
+      _loadPreferences();
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  /// Set notifications enabled
+  Future<void> setNotificationsEnabled(bool enabled) async {
+    try {
+      final repository = _ref.read(preferencesRepositoryProvider);
+      await repository.setNotificationsEnabled(enabled);
+      _loadPreferences();
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  /// Set reminder time
+  Future<void> setReminderTime(String? time) async {
+    try {
+      final repository = _ref.read(preferencesRepositoryProvider);
+      await repository.setReminderTime(time);
+      _loadPreferences();
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  /// Set haptics enabled
+  Future<void> setHapticsEnabled(bool enabled) async {
+    try {
+      final repository = _ref.read(preferencesRepositoryProvider);
+      await repository.setHapticsEnabled(enabled);
+      _loadPreferences();
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  /// Set sound enabled
+  Future<void> setSoundEnabled(bool enabled) async {
+    try {
+      final repository = _ref.read(preferencesRepositoryProvider);
+      await repository.setSoundEnabled(enabled);
+      _loadPreferences();
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  /// Reset to defaults
+  Future<void> resetToDefaults() async {
+    try {
+      final repository = _ref.read(preferencesRepositoryProvider);
+      await repository.resetToDefaults();
+      _loadPreferences();
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+    }
+  }
+
+  /// Refresh preferences
+  void refresh() => _loadPreferences();
+}
+
+/// Main preferences provider
+final preferencesProvider =
+    StateNotifierProvider<PreferencesNotifier, PreferencesState>((ref) {
+  return PreferencesNotifier(ref);
+});
+
+/// Provider for checking if onboarding is completed
+final onboardingCompletedProvider = Provider<bool>((ref) {
+  return ref.watch(preferencesProvider).onboardingCompleted;
+});
+
+/// Provider for current theme setting
+final themeSettingProvider = Provider<String>((ref) {
+  return ref.watch(preferencesProvider).theme;
+});
+
+/// Provider for ThemeMode based on preference
+final themeModeProvider = Provider<ThemeMode>((ref) {
+  final themeSetting = ref.watch(themeSettingProvider);
+  switch (themeSetting) {
+    case 'light':
+      return ThemeMode.light;
+    case 'dark':
+      return ThemeMode.dark;
+    default:
+      return ThemeMode.system;
+  }
+});
+
+/// Provider for notifications enabled
+final notificationsEnabledProvider = Provider<bool>((ref) {
+  return ref.watch(preferencesProvider).notificationsEnabled;
+});
+
+/// Provider for haptics enabled
+final hapticsEnabledProvider = Provider<bool>((ref) {
+  return ref.watch(preferencesProvider).hapticsEnabled;
+});
+
+/// Provider for sound enabled
+final soundEnabledProvider = Provider<bool>((ref) {
+  return ref.watch(preferencesProvider).soundEnabled;
+});

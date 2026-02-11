@@ -1,0 +1,299 @@
+{
+  "@@locale": "en",
+
+  "appName": "TaskTrakr",
+  "@appName": {"description": "The app name"},
+
+  "continueButton": "Continue",
+  "@continueButton": {"description": "Continue button text"},
+
+  "getStarted": "Get Started",
+  "@getStarted": {"description": "Get started button"},
+
+  "welcome": "Welcome",
+  "@welcome": {"description": "Welcome greeting"},
+
+  "welcomeDescription": "Turn your goals into achievable daily tasks with AI",
+  "@welcomeDescription": {"description": "Welcome screen description"},
+
+  "featureSetGoals": "Set goals in your own words",
+  "@featureSetGoals": {"description": "Feature: set goals"},
+
+  "featureAIPlan": "AI creates your daily plan",
+  "@featureAIPlan": {"description": "Feature: AI planning"},
+
+  "featureTrackProgress": "Track progress every day",
+  "@featureTrackProgress": {"description": "Feature: track progress"},
+
+  "featureRamadanMode": "Special Ramadan mode",
+  "@featureRamadanMode": {"description": "Feature: Ramadan mode"},
+
+  "todaysTasks": "Today's Tasks",
+  "@todaysTasks": {"description": "Today's tasks section header"},
+
+  "myGoals": "My Goals",
+  "@myGoals": {"description": "My goals section header"},
+
+  "newGoal": "New Goal",
+  "@newGoal": {"description": "New goal button/title"},
+
+  "addGoal": "Add Goal",
+  "@addGoal": {"description": "Add goal button"},
+
+  "whatToAchieve": "What do you want to achieve?",
+  "@whatToAchieve": {"description": "Goal input prompt"},
+
+  "goalHint": "Example: I want to complete reading the Quran this Ramadan...",
+  "@goalHint": {"description": "Goal input hint"},
+
+  "duration": "Duration",
+  "@duration": {"description": "Duration section label"},
+
+  "categoryOptional": "Category (optional)",
+  "@categoryOptional": {"description": "Category section label"},
+
+  "generatePlan": "Generate Plan",
+  "@generatePlan": {"description": "Generate plan button"},
+
+  "aiWillCreate": "AI will create a personalized daily plan for you",
+  "@aiWillCreate": {"description": "AI helper text"},
+
+  "analyzingGoal": "Analyzing your goal...",
+  "@analyzingGoal": {"description": "AI loading message 1"},
+
+  "creatingPlan": "Creating your personalized plan...",
+  "@creatingPlan": {"description": "AI loading message 2"},
+
+  "distributingTasks": "Distributing tasks across {days} days...",
+  "@distributingTasks": {
+    "description": "AI loading message 3",
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+
+  "addingRestDays": "Adding rest days...",
+  "@addingRestDays": {"description": "AI loading message 4"},
+
+  "finalTouches": "Final touches...",
+  "@finalTouches": {"description": "AI loading message 5"},
+
+  "creatingDailyTasks": "Creating {days} daily tasks",
+  "@creatingDailyTasks": {
+    "description": "Creating tasks subtitle",
+    "placeholders": {
+      "days": {"type": "int"}
+    }
+  },
+
+  "yourGoal": "Your goal:",
+  "@yourGoal": {"description": "Your goal label"},
+
+  "cancel": "Cancel",
+  "@cancel": {"description": "Cancel button"},
+
+  "daysOfDays": "{completed} of {total} days",
+  "@daysOfDays": {
+    "description": "Progress text",
+    "placeholders": {
+      "completed": {"type": "int"},
+      "total": {"type": "int"}
+    }
+  },
+
+  "complete": "Complete",
+  "@complete": {"description": "Complete label"},
+
+  "currentStreak": "Current Streak",
+  "@currentStreak": {"description": "Current streak label"},
+
+  "bestStreak": "Best Streak",
+  "@bestStreak": {"description": "Best streak label"},
+
+  "phaseOfMercy": "Phase of Mercy",
+  "@phaseOfMercy": {"description": "Ramadan phase 1"},
+
+  "phaseOfForgiveness": "Phase of Forgiveness",
+  "@phaseOfForgiveness": {"description": "Ramadan phase 2"},
+
+  "phaseOfSalvation": "Phase of Salvation",
+  "@phaseOfSalvation": {"description": "Ramadan phase 3"},
+
+  "daysRange": "Days {start}-{end}",
+  "@daysRange": {
+    "description": "Days range",
+    "placeholders": {
+      "start": {"type": "int"},
+      "end": {"type": "int"}
+    }
+  },
+
+  "qadrNightsSoon": "Qadr nights soon",
+  "@qadrNightsSoon": {"description": "Laylatul Qadr reminder"},
+
+  "today": "Today",
+  "@today": {"description": "Today label"},
+
+  "todayDay": "Today - Day {day}",
+  "@todayDay": {
+    "description": "Today with day number",
+    "placeholders": {
+      "day": {"type": "int"}
+    }
+  },
+
+  "upcoming": "Upcoming",
+  "@upcoming": {"description": "Upcoming section"},
+
+  "completed": "Completed",
+  "@completed": {"description": "Completed section"},
+
+  "editGoal": "Edit Goal",
+  "@editGoal": {"description": "Edit goal option"},
+
+  "regeneratePlan": "Regenerate Plan",
+  "@regeneratePlan": {"description": "Regenerate plan option"},
+
+  "deleteGoal": "Delete Goal",
+  "@deleteGoal": {"description": "Delete goal option"},
+
+  "settings": "Settings",
+  "@settings": {"description": "Settings title"},
+
+  "language": "Language",
+  "@language": {"description": "Language setting"},
+
+  "selectLanguage": "Select Language",
+  "@selectLanguage": {"description": "Select language dialog title"},
+
+  "appearance": "Appearance",
+  "@appearance": {"description": "Appearance section"},
+
+  "theme": "Theme",
+  "@theme": {"description": "Theme setting"},
+
+  "selectTheme": "Select Theme",
+  "@selectTheme": {"description": "Select theme dialog title"},
+
+  "systemDefault": "System Default",
+  "@systemDefault": {"description": "System default theme"},
+
+  "light": "Light",
+  "@light": {"description": "Light theme"},
+
+  "dark": "Dark",
+  "@dark": {"description": "Dark theme"},
+
+  "about": "About",
+  "@about": {"description": "About section"},
+
+  "aboutTaskTrakr": "About TaskTrakr",
+  "@aboutTaskTrakr": {"description": "About TaskTrakr option"},
+
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {"description": "Privacy policy option"},
+
+  "helpSupport": "Help & Support",
+  "@helpSupport": {"description": "Help and support option"},
+
+  "dataStaysPrivate": "Your data stays private",
+  "@dataStaysPrivate": {"description": "Privacy notice title"},
+
+  "dataPrivacyDescription": "All your data is stored locally on your device. We don't collect any personal information.",
+  "@dataPrivacyDescription": {"description": "Privacy notice description"},
+
+  "aboutDescription": "AI-powered goal and habit builder.",
+  "@aboutDescription": {"description": "About dialog description"},
+
+  "version": "Version {version}",
+  "@version": {
+    "description": "Version text",
+    "placeholders": {
+      "version": {"type": "String"}
+    }
+  },
+
+  "ok": "OK",
+  "@ok": {"description": "OK button"},
+
+  "error": "Error",
+  "@error": {"description": "Error dialog title"},
+
+  "retry": "Retry",
+  "@retry": {"description": "Retry button"},
+
+  "days7": "7 days",
+  "@days7": {"description": "7 days duration"},
+
+  "days14": "14 days",
+  "@days14": {"description": "14 days duration"},
+
+  "days21": "21 days",
+  "@days21": {"description": "21 days duration"},
+
+  "days30": "30 days",
+  "@days30": {"description": "30 days duration"},
+
+  "days60": "60 days",
+  "@days60": {"description": "60 days duration"},
+
+  "days90": "90 days",
+  "@days90": {"description": "90 days duration"},
+
+  "categoryFitness": "Fitness",
+  "@categoryFitness": {"description": "Fitness category"},
+
+  "categoryLearning": "Learning",
+  "@categoryLearning": {"description": "Learning category"},
+
+  "categoryCreative": "Creative",
+  "@categoryCreative": {"description": "Creative category"},
+
+  "categoryWellness": "Wellness",
+  "@categoryWellness": {"description": "Wellness category"},
+
+  "categoryFinancial": "Financial",
+  "@categoryFinancial": {"description": "Financial category"},
+
+  "categoryRamadan": "Ramadan",
+  "@categoryRamadan": {"description": "Ramadan category"},
+
+  "categoryOther": "Other",
+  "@categoryOther": {"description": "Other category"},
+
+  "chooseLanguage": "Choose your language",
+  "@chooseLanguage": {"description": "Language selection title"},
+
+  "noTasksToday": "No tasks for today",
+  "@noTasksToday": {"description": "Empty state when no tasks"},
+
+  "addGoalToGetStarted": "Add a goal to get started",
+  "@addGoalToGetStarted": {"description": "Empty state helper text"},
+
+  "notifications": "Notifications",
+  "@notifications": {"description": "Notifications section header"},
+
+  "dailyReminder": "Daily Reminder",
+  "@dailyReminder": {"description": "Daily reminder toggle"},
+
+  "dailyReminderDescription": "Get reminded to check your tasks",
+  "@dailyReminderDescription": {"description": "Daily reminder description"},
+
+  "reminderTime": "Reminder Time",
+  "@reminderTime": {"description": "Reminder time setting"},
+
+  "selectTime": "Select Time",
+  "@selectTime": {"description": "Select time dialog title"},
+
+  "notificationPermissionRequired": "Notification permission is required",
+  "@notificationPermissionRequired": {"description": "Permission required message"},
+
+  "enableNotificationsInSettings": "Please enable notifications in your device settings",
+  "@enableNotificationsInSettings": {"description": "Enable notifications instruction"},
+
+  "reminderNotificationTitle": "Time to check your goals!",
+  "@reminderNotificationTitle": {"description": "Daily reminder notification title"},
+
+  "reminderNotificationBody": "Don't forget to complete today's tasks",
+  "@reminderNotificationBody": {"description": "Daily reminder notification body"}
+}
