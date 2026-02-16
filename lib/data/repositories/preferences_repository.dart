@@ -4,23 +4,63 @@ import '../models/user_preferences.dart';
 /// Repository for managing user preferences in Hive
 class PreferencesRepository {
   static const String boxName = 'preferences';
-  static const String _prefsKey = 'user_prefs';
+  static const String _defaultPrefsKey = 'user_prefs';
 
   Box<UserPreferences> get _box => Hive.box<UserPreferences>(boxName);
 
-  /// Get user preferences (creates default if not exists)
-  UserPreferences getPreferences() {
-    var prefs = _box.get(_prefsKey);
+  /// Get the storage key for a user (or default key if no userId)
+  String _keyForUser(String? userId) => userId ?? _defaultPrefsKey;
+
+  /// Get user preferences for a specific user (creates default if not exists)
+  UserPreferences getPreferences({String? userId}) {
+    final key = _keyForUser(userId);
+    var prefs = _box.get(key);
     if (prefs == null) {
       prefs = UserPreferences.defaults();
-      _box.put(_prefsKey, prefs);
+      prefs.userId = userId;
+      _box.put(key, prefs);
     }
     return prefs;
   }
 
   /// Save user preferences
   Future<void> savePreferences(UserPreferences prefs) async {
-    await _box.put(_prefsKey, prefs);
+    final key = _keyForUser(prefs.userId);
+    await _box.put(key, prefs);
+  }
+
+  /// Check if preferences exist for a user
+  bool hasPreferences({String? userId}) {
+    return _box.containsKey(_keyForUser(userId));
+  }
+
+  /// Migrate default preferences to a specific user (first sign-in)
+  Future<bool> migrateDefaultPreferencesToUser(String userId) async {
+    // Check if user already has preferences
+    if (_box.containsKey(userId)) {
+      return false; // Already has preferences, no migration needed
+    }
+
+    // Check if there are default preferences to migrate
+    final defaultPrefs = _box.get(_defaultPrefsKey);
+    if (defaultPrefs == null) {
+      return false; // No default preferences to migrate
+    }
+
+    // Copy default preferences to user
+    final userPrefs = UserPreferences(
+      language: defaultPrefs.language,
+      notificationsEnabled: defaultPrefs.notificationsEnabled,
+      reminderTime: defaultPrefs.reminderTime,
+      theme: defaultPrefs.theme,
+      hapticsEnabled: defaultPrefs.hapticsEnabled,
+      soundEnabled: defaultPrefs.soundEnabled,
+      onboardingCompleted: defaultPrefs.onboardingCompleted,
+      userId: userId,
+      hasSeenAuthPrompt: true,
+    );
+    await _box.put(userId, userPrefs);
+    return true;
   }
 
   // ============ Convenience Methods ============
@@ -95,13 +135,21 @@ class PreferencesRepository {
     await prefs.save();
   }
 
-  /// Reset preferences to defaults
-  Future<void> resetToDefaults() async {
-    await _box.put(_prefsKey, UserPreferences.defaults());
+  /// Reset preferences to defaults for a user
+  Future<void> resetToDefaults({String? userId}) async {
+    final key = _keyForUser(userId);
+    final prefs = UserPreferences.defaults();
+    prefs.userId = userId;
+    await _box.put(key, prefs);
   }
 
   /// Clear all preferences (for testing or logout)
   Future<void> clear() async {
     await _box.clear();
+  }
+
+  /// Clear preferences for a specific user
+  Future<void> clearForUser(String userId) async {
+    await _box.delete(userId);
   }
 }

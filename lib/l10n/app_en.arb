@@ -295,5 +295,165 @@
   "@reminderNotificationTitle": {"description": "Daily reminder notification title"},
 
   "reminderNotificationBody": "Don't forget to complete today's tasks",
-  "@reminderNotificationBody": {"description": "Daily reminder notification body"}
+  "@reminderNotificationBody": {"description": "Daily reminder notification body"},
+
+  "signIn": "Sign In",
+  "@signIn": {"description": "Sign in button/title"},
+
+  "signUp": "Sign Up",
+  "@signUp": {"description": "Sign up button/title"},
+
+  "signOut": "Sign Out",
+  "@signOut": {"description": "Sign out button"},
+
+  "signInWithGoogle": "Continue with Google",
+  "@signInWithGoogle": {"description": "Google sign in button"},
+
+  "signInWithApple": "Continue with Apple",
+  "@signInWithApple": {"description": "Apple sign in button"},
+
+  "signInWithEmail": "Sign in with Email",
+  "@signInWithEmail": {"description": "Email sign in option"},
+
+  "createAccount": "Create Account",
+  "@createAccount": {"description": "Create account button"},
+
+  "email": "Email",
+  "@email": {"description": "Email field label"},
+
+  "password": "Password",
+  "@password": {"description": "Password field label"},
+
+  "confirmPassword": "Confirm Password",
+  "@confirmPassword": {"description": "Confirm password field label"},
+
+  "forgotPassword": "Forgot Password?",
+  "@forgotPassword": {"description": "Forgot password link"},
+
+  "resetPassword": "Reset Password",
+  "@resetPassword": {"description": "Reset password button/title"},
+
+  "sendResetLink": "Send Reset Link",
+  "@sendResetLink": {"description": "Send reset link button"},
+
+  "backToLogin": "Back to Login",
+  "@backToLogin": {"description": "Back to login link"},
+
+  "dontHaveAccount": "Don't have an account?",
+  "@dontHaveAccount": {"description": "Sign up prompt text"},
+
+  "alreadyHaveAccount": "Already have an account?",
+  "@alreadyHaveAccount": {"description": "Sign in prompt text"},
+
+  "orContinueWith": "or continue with",
+  "@orContinueWith": {"description": "Social sign in divider text"},
+
+  "verifyEmail": "Verify Your Email",
+  "@verifyEmail": {"description": "Email verification title"},
+
+  "verificationEmailSent": "We sent a verification email to:",
+  "@verificationEmailSent": {"description": "Verification email sent message"},
+
+  "clickLinkToVerify": "Click the link in the email to verify your account.",
+  "@clickLinkToVerify": {"description": "Verification instruction"},
+
+  "iveVerifiedEmail": "I've Verified My Email",
+  "@iveVerifiedEmail": {"description": "Verification check button"},
+
+  "resendVerificationEmail": "Resend Verification Email",
+  "@resendVerificationEmail": {"description": "Resend verification button"},
+
+  "verificationEmailResent": "Verification email sent!",
+  "@verificationEmailResent": {"description": "Resend success message"},
+
+  "emailNotVerifiedYet": "Email not verified yet. Please check your inbox.",
+  "@emailNotVerifiedYet": {"description": "Not verified yet message"},
+
+  "wrongEmail": "Wrong email?",
+  "@wrongEmail": {"description": "Wrong email prompt"},
+
+  "didntReceiveEmail": "Didn't receive the email?",
+  "@didntReceiveEmail": {"description": "Email troubleshoot title"},
+
+  "checkSpamFolder": "Check your spam or junk folder",
+  "@checkSpamFolder": {"description": "Spam folder hint"},
+
+  "correctEmailHint": "Make sure you entered the correct email",
+  "@correctEmailHint": {"description": "Correct email hint"},
+
+  "waitAndTryAgain": "Wait a few minutes and try again",
+  "@waitAndTryAgain": {"description": "Wait and retry hint"},
+
+  "checkYourEmail": "Check Your Email",
+  "@checkYourEmail": {"description": "Password reset success title"},
+
+  "resetLinkSent": "If an account exists for {email}, you'll receive a password reset link.",
+  "@resetLinkSent": {
+    "description": "Password reset link sent message",
+    "placeholders": {
+      "email": {"type": "String"}
+    }
+  },
+
+  "tryDifferentEmail": "Try a different email",
+  "@tryDifferentEmail": {"description": "Try different email link"},
+
+  "passwordMinLength": "Password must be at least 6 characters",
+  "@passwordMinLength": {"description": "Password validation error"},
+
+  "passwordsDoNotMatch": "Passwords do not match",
+  "@passwordsDoNotMatch": {"description": "Password mismatch error"},
+
+  "invalidEmail": "Please enter a valid email",
+  "@invalidEmail": {"description": "Invalid email error"},
+
+  "agreeToTerms": "I agree to the Terms of Service and Privacy Policy",
+  "@agreeToTerms": {"description": "Terms agreement checkbox"},
+
+  "mustAgreeToTerms": "You must agree to continue",
+  "@mustAgreeToTerms": {"description": "Terms agreement error"},
+
+  "account": "Account",
+  "@account": {"description": "Account section header"},
+
+  "signedInAs": "Signed in as",
+  "@signedInAs": {"description": "Signed in as label"},
+
+  "signedInWith": "Signed in with {provider}",
+  "@signedInWith": {
+    "description": "Auth provider label",
+    "placeholders": {
+      "provider": {"type": "String"}
+    }
+  },
+
+  "deleteAccount": "Delete Account",
+  "@deleteAccount": {"description": "Delete account button"},
+
+  "deleteAccountWarning": "This will permanently delete your account and all associated data. This action cannot be undone.",
+  "@deleteAccountWarning": {"description": "Delete account warning"},
+
+  "confirmDelete": "Yes, Delete My Account",
+  "@confirmDelete": {"description": "Confirm delete button"},
+
+  "authErrorDefault": "An error occurred. Please try again.",
+  "@authErrorDefault": {"description": "Default auth error"},
+
+  "authErrorInvalidEmail": "Invalid email address",
+  "@authErrorInvalidEmail": {"description": "Invalid email auth error"},
+
+  "authErrorWrongPassword": "Incorrect password",
+  "@authErrorWrongPassword": {"description": "Wrong password auth error"},
+
+  "authErrorUserNotFound": "No account found with this email",
+  "@authErrorUserNotFound": {"description": "User not found auth error"},
+
+  "authErrorEmailInUse": "An account already exists with this email",
+  "@authErrorEmailInUse": {"description": "Email in use auth error"},
+
+  "authErrorWeakPassword": "Password is too weak",
+  "@authErrorWeakPassword": {"description": "Weak password auth error"},
+
+  "authErrorNetworkFailed": "Network error. Please check your connection.",
+  "@authErrorNetworkFailed": {"description": "Network error"}
 }

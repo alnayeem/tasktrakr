@@ -287,4 +287,160 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get reminderNotificationBody => 'لا تنسَ إنجاز مهام اليوم';
+
+  @override
+  String get signIn => 'تسجيل الدخول';
+
+  @override
+  String get signUp => 'إنشاء حساب';
+
+  @override
+  String get signOut => 'تسجيل الخروج';
+
+  @override
+  String get signInWithGoogle => 'المتابعة مع Google';
+
+  @override
+  String get signInWithApple => 'المتابعة مع Apple';
+
+  @override
+  String get signInWithEmail => 'الدخول بالبريد الإلكتروني';
+
+  @override
+  String get createAccount => 'إنشاء حساب';
+
+  @override
+  String get email => 'البريد الإلكتروني';
+
+  @override
+  String get password => 'كلمة المرور';
+
+  @override
+  String get confirmPassword => 'تأكيد كلمة المرور';
+
+  @override
+  String get forgotPassword => 'نسيت كلمة المرور؟';
+
+  @override
+  String get resetPassword => 'استعادة كلمة المرور';
+
+  @override
+  String get sendResetLink => 'إرسال رابط الاستعادة';
+
+  @override
+  String get backToLogin => 'العودة لتسجيل الدخول';
+
+  @override
+  String get dontHaveAccount => 'ليس لديك حساب؟';
+
+  @override
+  String get alreadyHaveAccount => 'لديك حساب بالفعل؟';
+
+  @override
+  String get orContinueWith => 'أو المتابعة عبر';
+
+  @override
+  String get verifyEmail => 'تأكيد بريدك الإلكتروني';
+
+  @override
+  String get verificationEmailSent => 'أرسلنا رسالة تأكيد إلى:';
+
+  @override
+  String get clickLinkToVerify => 'اضغط على الرابط في الرسالة لتأكيد حسابك.';
+
+  @override
+  String get iveVerifiedEmail => 'لقد أكدت بريدي الإلكتروني';
+
+  @override
+  String get resendVerificationEmail => 'إعادة إرسال رسالة التأكيد';
+
+  @override
+  String get verificationEmailResent => 'تم إرسال رسالة التأكيد!';
+
+  @override
+  String get emailNotVerifiedYet =>
+      'لم يتم تأكيد البريد بعد. يرجى التحقق من صندوق الوارد.';
+
+  @override
+  String get wrongEmail => 'بريد خاطئ؟';
+
+  @override
+  String get didntReceiveEmail => 'لم تصلك الرسالة؟';
+
+  @override
+  String get checkSpamFolder => 'تحقق من مجلد البريد المزعج';
+
+  @override
+  String get correctEmailHint => 'تأكد من صحة البريد الإلكتروني';
+
+  @override
+  String get waitAndTryAgain => 'انتظر قليلاً وحاول مجدداً';
+
+  @override
+  String get checkYourEmail => 'تحقق من بريدك';
+
+  @override
+  String resetLinkSent(String email) {
+    return 'إذا كان هناك حساب لـ $email، ستصلك رسالة لاستعادة كلمة المرور.';
+  }
+
+  @override
+  String get tryDifferentEmail => 'جرب بريداً آخر';
+
+  @override
+  String get passwordMinLength => 'كلمة المرور يجب أن تكون 6 أحرف على الأقل';
+
+  @override
+  String get passwordsDoNotMatch => 'كلمتا المرور غير متطابقتين';
+
+  @override
+  String get invalidEmail => 'يرجى إدخال بريد إلكتروني صحيح';
+
+  @override
+  String get agreeToTerms => 'أوافق على شروط الخدمة وسياسة الخصوصية';
+
+  @override
+  String get mustAgreeToTerms => 'يجب الموافقة للمتابعة';
+
+  @override
+  String get account => 'الحساب';
+
+  @override
+  String get signedInAs => 'مسجل الدخول كـ';
+
+  @override
+  String signedInWith(String provider) {
+    return 'مسجل الدخول عبر $provider';
+  }
+
+  @override
+  String get deleteAccount => 'حذف الحساب';
+
+  @override
+  String get deleteAccountWarning =>
+      'سيتم حذف حسابك وجميع البيانات المرتبطة به نهائياً. لا يمكن التراجع عن هذا الإجراء.';
+
+  @override
+  String get confirmDelete => 'نعم، احذف حسابي';
+
+  @override
+  String get authErrorDefault => 'حدث خطأ. يرجى المحاولة مجدداً.';
+
+  @override
+  String get authErrorInvalidEmail => 'بريد إلكتروني غير صالح';
+
+  @override
+  String get authErrorWrongPassword => 'كلمة مرور خاطئة';
+
+  @override
+  String get authErrorUserNotFound => 'لا يوجد حساب بهذا البريد';
+
+  @override
+  String get authErrorEmailInUse => 'يوجد حساب بهذا البريد بالفعل';
+
+  @override
+  String get authErrorWeakPassword => 'كلمة المرور ضعيفة جداً';
+
+  @override
+  String get authErrorNetworkFailed => 'خطأ في الشبكة. يرجى التحقق من اتصالك.';
 }

@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../features/auth/screens/login_screen.dart';
+import '../../features/auth/screens/signup_screen.dart';
+import '../../features/auth/screens/password_reset_screen.dart';
+import '../../features/auth/screens/email_verification_screen.dart';
 import '../../features/onboarding/screens/language_selection_screen.dart';
 import '../../features/onboarding/screens/welcome_screen.dart';
 import '../../features/dashboard/screens/dashboard_screen.dart';
@@ -9,26 +13,71 @@ import '../../features/goal_creation/screens/goal_creation_screen.dart';
 import '../../features/goal_creation/screens/ai_loading_screen.dart';
 import '../../features/goal_detail/screens/goal_detail_screen.dart';
 import '../../features/settings/screens/settings_screen.dart';
+import '../../providers/auth_provider.dart';
 import '../../providers/preferences_provider.dart';
 import 'app_routes.dart';
 import 'route_params.dart';
 
 /// Provider for the GoRouter instance
-/// This allows the router to be reactive to onboarding state changes
+/// This allows the router to be reactive to auth and onboarding state changes
 final routerProvider = Provider<GoRouter>((ref) {
   final onboardingCompleted = ref.watch(onboardingCompletedProvider);
+  final authStatus = ref.watch(authStatusProvider);
+  final isAuthenticated = ref.watch(isAuthenticatedProvider);
+  final needsEmailVerification = ref.watch(needsEmailVerificationProvider);
 
   return GoRouter(
     navigatorKey: AppRouter._rootNavigatorKey,
-    initialLocation: onboardingCompleted
-        ? AppRoute.dashboard.path
-        : AppRoute.languageSelection.path,
+    initialLocation: _getInitialLocation(
+      isAuthenticated,
+      onboardingCompleted,
+      authStatus,
+      needsEmailVerification,
+    ),
     debugLogDiagnostics: true,
     routes: AppRouter._routes,
     errorBuilder: AppRouter._errorBuilder,
-    redirect: (context, state) => AppRouter._redirect(context, state, onboardingCompleted),
+    redirect: (context, state) => AppRouter._redirect(
+      context,
+      state,
+      onboardingCompleted,
+      isAuthenticated,
+      authStatus,
+      needsEmailVerification,
+    ),
   );
 });
+
+/// Determine initial location based on auth and onboarding state
+String _getInitialLocation(
+  bool isAuthenticated,
+  bool onboardingCompleted,
+  AuthStatus authStatus,
+  bool needsEmailVerification,
+) {
+  // Still loading auth state
+  if (authStatus == AuthStatus.initial) {
+    return AppRoute.login.path;
+  }
+
+  // Not authenticated
+  if (!isAuthenticated) {
+    return AppRoute.login.path;
+  }
+
+  // Needs email verification
+  if (needsEmailVerification) {
+    return AppRoute.emailVerification.path;
+  }
+
+  // Authenticated but needs onboarding
+  if (!onboardingCompleted) {
+    return AppRoute.languageSelection.path;
+  }
+
+  // Fully authenticated and onboarded
+  return AppRoute.dashboard.path;
+}
 
 /// Main router configuration for the TaskTrakr app
 /// Uses go_router with type-safe route definitions
@@ -68,6 +117,28 @@ class AppRouter {
 
   /// Route configuration - screens get language from provider, not from route
   static final List<RouteBase> _routes = [
+    // Auth routes
+    GoRoute(
+      path: AppRoute.login.path,
+      name: AppRoute.login.name,
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: AppRoute.signUp.path,
+      name: AppRoute.signUp.name,
+      builder: (context, state) => const SignUpScreen(),
+    ),
+    GoRoute(
+      path: AppRoute.passwordReset.path,
+      name: AppRoute.passwordReset.name,
+      builder: (context, state) => const PasswordResetScreen(),
+    ),
+    GoRoute(
+      path: AppRoute.emailVerification.path,
+      name: AppRoute.emailVerification.name,
+      builder: (context, state) => const EmailVerificationScreen(),
+    ),
+
     // Onboarding routes
     GoRoute(
       path: AppRoute.languageSelection.path,
@@ -153,33 +224,71 @@ class AppRouter {
     BuildContext context,
     GoRouterState state,
     bool onboardingCompleted,
+    bool isAuthenticated,
+    AuthStatus authStatus,
+    bool needsEmailVerification,
   ) {
     final currentPath = state.uri.path;
     final currentRoute = AppRoute.fromPath(currentPath);
 
-    // If onboarding is completed
-    if (onboardingCompleted) {
-      // Redirect away from onboarding routes to dashboard
-      if (currentRoute != null && currentRoute.isOnboarding) {
-        return AppRoute.dashboard.path;
+    // Still loading auth state - stay on current route
+    if (authStatus == AuthStatus.initial || authStatus == AuthStatus.loading) {
+      return null;
+    }
+
+    // ============ CASE 1: Not authenticated ============
+    if (!isAuthenticated) {
+      // Allow auth routes
+      if (currentRoute != null && currentRoute.isAuthRoute) {
+        return null;
       }
-      // Allow access to all other routes
-      return null;
+      // Redirect to login for any non-auth route
+      return AppRoute.login.path;
     }
 
-    // If onboarding is NOT completed
-    // Allow access to onboarding routes
+    // ============ CASE 2: Authenticated but needs email verification ============
+    if (needsEmailVerification) {
+      if (currentRoute == AppRoute.emailVerification) {
+        return null;
+      }
+      return AppRoute.emailVerification.path;
+    }
+
+    // ============ CASE 3: Authenticated, on auth route ============
+    if (currentRoute != null && currentRoute.isAuthRoute) {
+      // Go to onboarding or dashboard
+      return onboardingCompleted
+          ? AppRoute.dashboard.path
+          : AppRoute.languageSelection.path;
+    }
+
+    // ============ CASE 4: Authenticated, onboarding not complete ============
+    if (!onboardingCompleted) {
+      if (currentRoute != null && currentRoute.isOnboarding) {
+        return null; // Allow onboarding routes
+      }
+      return AppRoute.languageSelection.path;
+    }
+
+    // ============ CASE 5: Fully authenticated and onboarded ============
+    // Redirect away from onboarding routes
     if (currentRoute != null && currentRoute.isOnboarding) {
-      return null;
+      return AppRoute.dashboard.path;
     }
 
-    // Redirect to language selection for any non-onboarding route
-    return AppRoute.languageSelection.path;
+    // Allow access to all other routes
+    return null;
   }
 }
 
 /// Extension on BuildContext for convenient navigation
 extension TaskTrakrNavigation on BuildContext {
+  // Auth navigation
+  void goToLogin() => go(AppRoute.login.path);
+  void goToSignUp() => go(AppRoute.signUp.path);
+  void goToPasswordReset() => go(AppRoute.passwordReset.path);
+  void goToEmailVerification() => go(AppRoute.emailVerification.path);
+
   /// Navigate to language selection
   void goToLanguageSelection() => go(AppRoute.languageSelection.path);
 

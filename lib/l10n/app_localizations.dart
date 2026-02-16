@@ -645,6 +645,306 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Don\'t forget to complete today\'s tasks'**
   String get reminderNotificationBody;
+
+  /// Sign in button/title
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get signIn;
+
+  /// Sign up button/title
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get signUp;
+
+  /// Sign out button
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Out'**
+  String get signOut;
+
+  /// Google sign in button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Google'**
+  String get signInWithGoogle;
+
+  /// Apple sign in button
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with Apple'**
+  String get signInWithApple;
+
+  /// Email sign in option
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in with Email'**
+  String get signInWithEmail;
+
+  /// Create account button
+  ///
+  /// In en, this message translates to:
+  /// **'Create Account'**
+  String get createAccount;
+
+  /// Email field label
+  ///
+  /// In en, this message translates to:
+  /// **'Email'**
+  String get email;
+
+  /// Password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Password'**
+  String get password;
+
+  /// Confirm password field label
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get confirmPassword;
+
+  /// Forgot password link
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot Password?'**
+  String get forgotPassword;
+
+  /// Reset password button/title
+  ///
+  /// In en, this message translates to:
+  /// **'Reset Password'**
+  String get resetPassword;
+
+  /// Send reset link button
+  ///
+  /// In en, this message translates to:
+  /// **'Send Reset Link'**
+  String get sendResetLink;
+
+  /// Back to login link
+  ///
+  /// In en, this message translates to:
+  /// **'Back to Login'**
+  String get backToLogin;
+
+  /// Sign up prompt text
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account?'**
+  String get dontHaveAccount;
+
+  /// Sign in prompt text
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account?'**
+  String get alreadyHaveAccount;
+
+  /// Social sign in divider text
+  ///
+  /// In en, this message translates to:
+  /// **'or continue with'**
+  String get orContinueWith;
+
+  /// Email verification title
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Your Email'**
+  String get verifyEmail;
+
+  /// Verification email sent message
+  ///
+  /// In en, this message translates to:
+  /// **'We sent a verification email to:'**
+  String get verificationEmailSent;
+
+  /// Verification instruction
+  ///
+  /// In en, this message translates to:
+  /// **'Click the link in the email to verify your account.'**
+  String get clickLinkToVerify;
+
+  /// Verification check button
+  ///
+  /// In en, this message translates to:
+  /// **'I\'ve Verified My Email'**
+  String get iveVerifiedEmail;
+
+  /// Resend verification button
+  ///
+  /// In en, this message translates to:
+  /// **'Resend Verification Email'**
+  String get resendVerificationEmail;
+
+  /// Resend success message
+  ///
+  /// In en, this message translates to:
+  /// **'Verification email sent!'**
+  String get verificationEmailResent;
+
+  /// Not verified yet message
+  ///
+  /// In en, this message translates to:
+  /// **'Email not verified yet. Please check your inbox.'**
+  String get emailNotVerifiedYet;
+
+  /// Wrong email prompt
+  ///
+  /// In en, this message translates to:
+  /// **'Wrong email?'**
+  String get wrongEmail;
+
+  /// Email troubleshoot title
+  ///
+  /// In en, this message translates to:
+  /// **'Didn\'t receive the email?'**
+  String get didntReceiveEmail;
+
+  /// Spam folder hint
+  ///
+  /// In en, this message translates to:
+  /// **'Check your spam or junk folder'**
+  String get checkSpamFolder;
+
+  /// Correct email hint
+  ///
+  /// In en, this message translates to:
+  /// **'Make sure you entered the correct email'**
+  String get correctEmailHint;
+
+  /// Wait and retry hint
+  ///
+  /// In en, this message translates to:
+  /// **'Wait a few minutes and try again'**
+  String get waitAndTryAgain;
+
+  /// Password reset success title
+  ///
+  /// In en, this message translates to:
+  /// **'Check Your Email'**
+  String get checkYourEmail;
+
+  /// Password reset link sent message
+  ///
+  /// In en, this message translates to:
+  /// **'If an account exists for {email}, you\'ll receive a password reset link.'**
+  String resetLinkSent(String email);
+
+  /// Try different email link
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different email'**
+  String get tryDifferentEmail;
+
+  /// Password validation error
+  ///
+  /// In en, this message translates to:
+  /// **'Password must be at least 6 characters'**
+  String get passwordMinLength;
+
+  /// Password mismatch error
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get passwordsDoNotMatch;
+
+  /// Invalid email error
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email'**
+  String get invalidEmail;
+
+  /// Terms agreement checkbox
+  ///
+  /// In en, this message translates to:
+  /// **'I agree to the Terms of Service and Privacy Policy'**
+  String get agreeToTerms;
+
+  /// Terms agreement error
+  ///
+  /// In en, this message translates to:
+  /// **'You must agree to continue'**
+  String get mustAgreeToTerms;
+
+  /// Account section header
+  ///
+  /// In en, this message translates to:
+  /// **'Account'**
+  String get account;
+
+  /// Signed in as label
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in as'**
+  String get signedInAs;
+
+  /// Auth provider label
+  ///
+  /// In en, this message translates to:
+  /// **'Signed in with {provider}'**
+  String signedInWith(String provider);
+
+  /// Delete account button
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Account'**
+  String get deleteAccount;
+
+  /// Delete account warning
+  ///
+  /// In en, this message translates to:
+  /// **'This will permanently delete your account and all associated data. This action cannot be undone.'**
+  String get deleteAccountWarning;
+
+  /// Confirm delete button
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, Delete My Account'**
+  String get confirmDelete;
+
+  /// Default auth error
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred. Please try again.'**
+  String get authErrorDefault;
+
+  /// Invalid email auth error
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid email address'**
+  String get authErrorInvalidEmail;
+
+  /// Wrong password auth error
+  ///
+  /// In en, this message translates to:
+  /// **'Incorrect password'**
+  String get authErrorWrongPassword;
+
+  /// User not found auth error
+  ///
+  /// In en, this message translates to:
+  /// **'No account found with this email'**
+  String get authErrorUserNotFound;
+
+  /// Email in use auth error
+  ///
+  /// In en, this message translates to:
+  /// **'An account already exists with this email'**
+  String get authErrorEmailInUse;
+
+  /// Weak password auth error
+  ///
+  /// In en, this message translates to:
+  /// **'Password is too weak'**
+  String get authErrorWeakPassword;
+
+  /// Network error
+  ///
+  /// In en, this message translates to:
+  /// **'Network error. Please check your connection.'**
+  String get authErrorNetworkFailed;
 }
 
 class _AppLocalizationsDelegate

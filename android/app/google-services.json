@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "263151126635",
+    "project_id": "tasktrakr-app",
+    "storage_bucket": "tasktrakr-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:263151126635:android:3c538c26487d2133e0892e",
+        "android_client_info": {
+          "package_name": "com.tasktrakr.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "263151126635-vf4v61po98o2asj19dh8uoqt4251o4l0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tasktrakr.app",
+            "certificate_hash": "578b1bc5978b82dfc75232dbcf812d3551926088"
+          }
+        },
+        {
+          "client_id": "263151126635-404ra21jsmdoqldo676ihhl9fl53f0fh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjJGN4TGCom8CWwQS5RvOkEVWDMAs4cx0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "263151126635-404ra21jsmdoqldo676ihhl9fl53f0fh.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "263151126635-jcvubtb0u5qmt6398nic274bi9h87l7r.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.tasktrakr.app"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

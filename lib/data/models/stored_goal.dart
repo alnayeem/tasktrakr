@@ -60,6 +60,9 @@ class StoredGoal extends HiveObject {
   @HiveField(17)
   String updatedAt; // ISO datetime string
 
+  @HiveField(18)
+  String? userId; // User ID for multi-user support (null for legacy local data, mutable for migration)
+
   StoredGoal({
     required this.id,
     required this.title,
@@ -79,6 +82,7 @@ class StoredGoal extends HiveObject {
     this.bestStreak = 0,
     required this.createdAt,
     required this.updatedAt,
+    this.userId,
   });
 
   /// Completion percentage (0.0 to 1.0)
@@ -137,6 +141,7 @@ class StoredGoal extends HiveObject {
     int? bestStreak,
     String? createdAt,
     String? updatedAt,
+    String? userId,
   }) {
     return StoredGoal(
       id: id ?? this.id,
@@ -157,6 +162,7 @@ class StoredGoal extends HiveObject {
       bestStreak: bestStreak ?? this.bestStreak,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
+      userId: userId ?? this.userId,
     );
   }
 }

@@ -24,13 +24,15 @@ class UserPreferencesAdapter extends TypeAdapter<UserPreferences> {
       hapticsEnabled: fields[4] as bool,
       soundEnabled: fields[5] as bool,
       onboardingCompleted: fields[6] as bool,
+      userId: fields[7] as String?,
+      hasSeenAuthPrompt: fields[8] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserPreferences obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.language)
       ..writeByte(1)
@@ -44,7 +46,11 @@ class UserPreferencesAdapter extends TypeAdapter<UserPreferences> {
       ..writeByte(5)
       ..write(obj.soundEnabled)
       ..writeByte(6)
-      ..write(obj.onboardingCompleted);
+      ..write(obj.onboardingCompleted)
+      ..writeByte(7)
+      ..write(obj.userId)
+      ..writeByte(8)
+      ..write(obj.hasSeenAuthPrompt);
   }
 
   @override

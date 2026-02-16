@@ -33,13 +33,14 @@ class StoredDayPlanAdapter extends TypeAdapter<StoredDayPlan> {
       startedAt: fields[13] as String?,
       completedAt: fields[14] as String?,
       userNotes: fields[15] as String?,
+      userId: fields[16] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, StoredDayPlan obj) {
     writer
-      ..writeByte(16)
+      ..writeByte(17)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -71,7 +72,9 @@ class StoredDayPlanAdapter extends TypeAdapter<StoredDayPlan> {
       ..writeByte(14)
       ..write(obj.completedAt)
       ..writeByte(15)
-      ..write(obj.userNotes);
+      ..write(obj.userNotes)
+      ..writeByte(16)
+      ..write(obj.userId);
   }
 
   @override

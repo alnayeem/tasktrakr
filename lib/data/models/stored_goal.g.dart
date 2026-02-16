@@ -35,13 +35,14 @@ class StoredGoalAdapter extends TypeAdapter<StoredGoal> {
       bestStreak: fields[15] as int,
       createdAt: fields[16] as String,
       updatedAt: fields[17] as String,
+      userId: fields[18] as String?,
     );
   }
 
   @override
   void write(BinaryWriter writer, StoredGoal obj) {
     writer
-      ..writeByte(18)
+      ..writeByte(19)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -77,7 +78,9 @@ class StoredGoalAdapter extends TypeAdapter<StoredGoal> {
       ..writeByte(16)
       ..write(obj.createdAt)
       ..writeByte(17)
-      ..write(obj.updatedAt);
+      ..write(obj.updatedAt)
+      ..writeByte(18)
+      ..write(obj.userId);
   }
 
   @override

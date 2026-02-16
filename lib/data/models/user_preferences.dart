@@ -26,6 +26,12 @@ class UserPreferences extends HiveObject {
   @HiveField(6)
   bool onboardingCompleted;
 
+  @HiveField(7)
+  String? userId; // User ID for multi-user support
+
+  @HiveField(8)
+  bool hasSeenAuthPrompt; // Track if user has dismissed auth screen
+
   UserPreferences({
     this.language = 'en',
     this.notificationsEnabled = true,
@@ -34,6 +40,8 @@ class UserPreferences extends HiveObject {
     this.hapticsEnabled = true,
     this.soundEnabled = true,
     this.onboardingCompleted = false,
+    this.userId,
+    this.hasSeenAuthPrompt = false,
   });
 
   /// Create default preferences
@@ -48,6 +56,8 @@ class UserPreferences extends HiveObject {
     bool? hapticsEnabled,
     bool? soundEnabled,
     bool? onboardingCompleted,
+    String? userId,
+    bool? hasSeenAuthPrompt,
   }) {
     return UserPreferences(
       language: language ?? this.language,
@@ -57,6 +67,8 @@ class UserPreferences extends HiveObject {
       hapticsEnabled: hapticsEnabled ?? this.hapticsEnabled,
       soundEnabled: soundEnabled ?? this.soundEnabled,
       onboardingCompleted: onboardingCompleted ?? this.onboardingCompleted,
+      userId: userId ?? this.userId,
+      hasSeenAuthPrompt: hasSeenAuthPrompt ?? this.hasSeenAuthPrompt,
     );
   }
 }

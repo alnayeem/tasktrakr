@@ -9,22 +9,27 @@ class GoalsState {
   final List<StoredGoal> goals;
   final bool isLoading;
   final String? error;
+  final String? userId;
 
   const GoalsState({
     this.goals = const [],
     this.isLoading = false,
     this.error,
+    this.userId,
   });
 
   GoalsState copyWith({
     List<StoredGoal>? goals,
     bool? isLoading,
     String? error,
+    String? userId,
+    bool clearUserId = false,
   }) {
     return GoalsState(
       goals: goals ?? this.goals,
       isLoading: isLoading ?? this.isLoading,
       error: error,
+      userId: clearUserId ? null : (userId ?? this.userId),
     );
   }
 
@@ -41,28 +46,58 @@ class GoalsState {
 /// Notifier for managing goals state
 class GoalsNotifier extends StateNotifier<GoalsState> {
   final GoalRepository _repository;
+  String? _currentUserId;
 
   GoalsNotifier(this._repository) : super(const GoalsState()) {
-    loadGoals();
+    _loadGoals();
   }
 
-  /// Load all goals from repository
-  void loadGoals() {
+  /// Load goals from repository for current user
+  void _loadGoals({String? userId}) {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      final goals = _repository.getAllGoals();
-      state = state.copyWith(goals: goals, isLoading: false);
+      final goals = _repository.getAllGoals(userId: userId);
+      _currentUserId = userId;
+      state = state.copyWith(goals: goals, isLoading: false, userId: userId);
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
+  }
+
+  /// Load goals for a specific user (called on sign-in)
+  Future<void> loadForUser(String userId) async {
+    // Migrate orphan data to this user on first sign-in
+    final migratedCount = await _repository.migrateOrphanDataToUser(userId);
+    if (migratedCount > 0) {
+      // ignore: avoid_print
+      print('GoalsNotifier: Migrated $migratedCount orphan goals to user $userId');
+    }
+    _loadGoals(userId: userId);
+  }
+
+  /// Clear user context (called on sign-out)
+  void clearUserContext() {
+    _currentUserId = null;
+    _loadGoals(userId: null);
   }
 
   /// Save a new goal with its day plans
   Future<void> saveGoal(StoredGoal goal, List<StoredDayPlan> dayPlans) async {
     state = state.copyWith(isLoading: true, error: null);
     try {
-      await _repository.saveGoal(goal, dayPlans);
-      loadGoals(); // Refresh the list
+      // Ensure userId is set on goal and day plans
+      StoredGoal goalToSave = goal;
+      List<StoredDayPlan> plansToSave = dayPlans;
+
+      if (_currentUserId != null && goal.userId == null) {
+        goalToSave = goal.copyWith(userId: _currentUserId);
+        plansToSave = dayPlans.map((plan) =>
+          plan.userId == null ? plan.copyWith(userId: _currentUserId) : plan
+        ).toList();
+      }
+
+      await _repository.saveGoal(goalToSave, plansToSave);
+      _loadGoals(userId: _currentUserId); // Refresh the list
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
@@ -73,7 +108,7 @@ class GoalsNotifier extends StateNotifier<GoalsState> {
     state = state.copyWith(isLoading: true, error: null);
     try {
       await _repository.deleteGoal(goalId);
-      loadGoals(); // Refresh the list
+      _loadGoals(userId: _currentUserId); // Refresh the list
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
     }
@@ -81,7 +116,7 @@ class GoalsNotifier extends StateNotifier<GoalsState> {
 
   /// Refresh goals (for pull-to-refresh)
   Future<void> refresh() async {
-    loadGoals();
+    _loadGoals(userId: _currentUserId);
   }
 }
 

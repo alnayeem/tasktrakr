@@ -15,7 +15,7 @@ class AIService {
   final String _workerUrl;
 
   static const int _maxRetries = 3;
-  static const Duration _timeout = Duration(seconds: 30);
+  static const Duration _timeout = Duration(seconds: 60);
 
   AIService({
     Dio? dio,

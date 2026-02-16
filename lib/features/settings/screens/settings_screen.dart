@@ -4,6 +4,7 @@ import '../../../l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/models/language.dart';
 import '../../../core/theme/colors.dart';
+import '../../../providers/auth_provider.dart';
 import '../../../providers/language_provider.dart';
 import '../../../providers/preferences_provider.dart';
 import '../../../services/notification_service.dart';
@@ -26,6 +27,10 @@ class SettingsScreen extends ConsumerWidget {
     // Find current language
     final currentLanguage = Language.findByCode(languageCode) ?? Language.defaultLanguage;
 
+    final authState = ref.watch(authProvider);
+    final isAuthenticated = authState.status == AuthStatus.authenticated;
+    final user = authState.user;
+
     return Directionality(
       textDirection: isRtl ? TextDirection.rtl : TextDirection.ltr,
       child: Scaffold(
@@ -41,6 +46,14 @@ class SettingsScreen extends ConsumerWidget {
         body: ListView(
           padding: const EdgeInsets.all(20),
           children: [
+            // Account Section
+            if (isAuthenticated && user != null) ...[
+              _buildSectionHeader(context, l10n.account),
+              const SizedBox(height: 12),
+              _buildAccountSection(context, ref, l10n, user),
+              const SizedBox(height: 32),
+            ],
+
             // Language Section
             _buildSectionHeader(context, l10n.language),
             const SizedBox(height: 12),
@@ -352,6 +365,174 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAccountSection(BuildContext context, WidgetRef ref, AppLocalizations l10n, dynamic user) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.03),
+            blurRadius: 8,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: Column(
+        children: [
+          // User info row
+          Row(
+            children: [
+              // Avatar
+              _buildUserAvatar(context, user),
+              const SizedBox(width: 16),
+              // User details
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      user.displayNameOrEmail,
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            fontWeight: FontWeight.w600,
+                          ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      user.email ?? '',
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Theme.of(context).textTheme.bodySmall?.color?.withValues(alpha: 0.7),
+                          ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 4),
+                    _buildAuthProviderBadge(context, l10n, user.authProvider),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          const Divider(height: 1),
+          const SizedBox(height: 8),
+          // Sign out button
+          SizedBox(
+            width: double.infinity,
+            child: TextButton.icon(
+              onPressed: () => _showSignOutConfirmation(context, ref, l10n),
+              icon: const Icon(Icons.logout, size: 20),
+              label: Text(l10n.signOut),
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.red,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildUserAvatar(BuildContext context, dynamic user) {
+    if (user.photoUrl != null && user.photoUrl!.isNotEmpty) {
+      return CircleAvatar(
+        radius: 28,
+        backgroundImage: NetworkImage(user.photoUrl!),
+        backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+      );
+    }
+
+    return CircleAvatar(
+      radius: 28,
+      backgroundColor: AppColors.primary.withValues(alpha: 0.1),
+      child: Text(
+        user.initials,
+        style: const TextStyle(
+          color: AppColors.primary,
+          fontWeight: FontWeight.w600,
+          fontSize: 18,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAuthProviderBadge(BuildContext context, AppLocalizations l10n, String authProvider) {
+    IconData icon;
+    String label;
+    Color color;
+
+    switch (authProvider) {
+      case 'google':
+        icon = Icons.g_mobiledata;
+        label = 'Google';
+        color = const Color(0xFF4285F4);
+        break;
+      case 'apple':
+        icon = Icons.apple;
+        label = 'Apple';
+        color = Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black;
+        break;
+      default:
+        icon = Icons.email_outlined;
+        label = 'Email';
+        color = AppColors.primary;
+    }
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      decoration: BoxDecoration(
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(icon, size: 14, color: color),
+          const SizedBox(width: 4),
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontSize: 11,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showSignOutConfirmation(BuildContext context, WidgetRef ref, AppLocalizations l10n) {
+    showDialog(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        title: Text(l10n.signOut),
+        content: const Text('Are you sure you want to sign out?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext),
+            child: Text(l10n.cancel),
+          ),
+          TextButton(
+            onPressed: () async {
+              Navigator.pop(dialogContext);
+              await ref.read(authProvider.notifier).signOut();
+              if (context.mounted) {
+                context.go('/auth/login');
+              }
+            },
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: Text(l10n.signOut),
           ),
         ],
       ),

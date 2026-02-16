@@ -57,6 +57,9 @@ class StoredDayPlan extends HiveObject {
   @HiveField(15)
   String? userNotes; // Optional notes from user about their progress
 
+  @HiveField(16)
+  String? userId; // User ID for multi-user support (null for legacy local data, mutable for migration)
+
   StoredDayPlan({
     required this.id,
     required this.goalId,
@@ -74,6 +77,7 @@ class StoredDayPlan extends HiveObject {
     this.startedAt,
     this.completedAt,
     this.userNotes,
+    this.userId,
   });
 
   /// Whether this day has a task assignment
@@ -137,6 +141,7 @@ class StoredDayPlan extends HiveObject {
     String? startedAt,
     String? completedAt,
     String? userNotes,
+    String? userId,
   }) {
     return StoredDayPlan(
       id: id ?? this.id,
@@ -155,6 +160,7 @@ class StoredDayPlan extends HiveObject {
       startedAt: startedAt ?? this.startedAt,
       completedAt: completedAt ?? this.completedAt,
       userNotes: userNotes ?? this.userNotes,
+      userId: userId ?? this.userId,
     );
   }
 }

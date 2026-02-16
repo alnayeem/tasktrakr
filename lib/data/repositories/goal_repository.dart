@@ -20,10 +20,13 @@ class GoalRepository {
     }
   }
 
-  /// Get all goals
-  List<StoredGoal> getAllGoals() {
-    return _goalsBox.values.toList()
-      ..sort((a, b) => b.createdAt.compareTo(a.createdAt)); // Newest first
+  /// Get all goals for a specific user (or all if userId is null)
+  List<StoredGoal> getAllGoals({String? userId}) {
+    var goals = _goalsBox.values.toList();
+    if (userId != null) {
+      goals = goals.where((g) => g.userId == userId).toList();
+    }
+    return goals..sort((a, b) => b.createdAt.compareTo(a.createdAt));
   }
 
   /// Get a single goal by ID
@@ -31,9 +34,13 @@ class GoalRepository {
     return _goalsBox.get(goalId);
   }
 
-  /// Get active goals (started, not completed, not expired)
-  List<StoredGoal> getActiveGoals() {
-    return _goalsBox.values.where((goal) => goal.isActive).toList();
+  /// Get active goals for a specific user (started, not completed, not expired)
+  List<StoredGoal> getActiveGoals({String? userId}) {
+    var goals = _goalsBox.values.where((goal) => goal.isActive);
+    if (userId != null) {
+      goals = goals.where((g) => g.userId == userId);
+    }
+    return goals.toList();
   }
 
   /// Delete a goal and all its day plans
@@ -65,10 +72,14 @@ class GoalRepository {
     return getDayPlansForGoal(goalId).where((p) => p.hasAssignment).toList();
   }
 
-  /// Get today's day plans across all goals
-  List<StoredDayPlan> getTodaysDayPlans() {
+  /// Get today's day plans across all goals for a specific user
+  List<StoredDayPlan> getTodaysDayPlans({String? userId}) {
     final today = DateTime.now().toIso8601String().substring(0, 10);
-    return _dayPlansBox.values.where((p) => p.date == today).toList();
+    var plans = _dayPlansBox.values.where((p) => p.date == today);
+    if (userId != null) {
+      plans = plans.where((p) => p.userId == userId);
+    }
+    return plans.toList();
   }
 
   /// Get today's day plan for a specific goal
@@ -230,11 +241,46 @@ class GoalRepository {
 
   // ============ Utility ============
 
-  /// Check if any goals exist
-  bool hasGoals() => _goalsBox.isNotEmpty;
+  /// Check if any goals exist for a user
+  bool hasGoals({String? userId}) {
+    if (userId == null) return _goalsBox.isNotEmpty;
+    return _goalsBox.values.any((g) => g.userId == userId);
+  }
 
-  /// Get total count of goals
-  int get goalCount => _goalsBox.length;
+  /// Get total count of goals for a user
+  int goalCount({String? userId}) {
+    if (userId == null) return _goalsBox.length;
+    return _goalsBox.values.where((g) => g.userId == userId).length;
+  }
+
+  /// Check if there are orphan goals without a userId (for migration)
+  bool hasOrphanGoals() {
+    return _goalsBox.values.any((g) => g.userId == null);
+  }
+
+  /// Migrate orphan goals/plans (without userId) to a specific user
+  Future<int> migrateOrphanDataToUser(String userId) async {
+    int migratedCount = 0;
+
+    // Migrate goals without userId
+    for (final goal in _goalsBox.values) {
+      if (goal.userId == null) {
+        goal.userId = userId;
+        await goal.save();
+        migratedCount++;
+      }
+    }
+
+    // Migrate day plans without userId
+    for (final plan in _dayPlansBox.values) {
+      if (plan.userId == null) {
+        plan.userId = userId;
+        await plan.save();
+      }
+    }
+
+    return migratedCount;
+  }
 
   /// Clear all data (for testing or reset)
   Future<void> clearAll() async {

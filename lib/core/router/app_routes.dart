@@ -4,11 +4,29 @@ library;
 
 /// Enum defining all routes in the app
 enum AppRoute {
+  // ============ Auth Routes ============
+
+  /// Login screen
+  login('/auth/login'),
+
+  /// Sign up screen
+  signUp('/auth/signup'),
+
+  /// Password reset screen
+  passwordReset('/auth/password-reset'),
+
+  /// Email verification screen
+  emailVerification('/auth/verify-email'),
+
+  // ============ Onboarding Routes ============
+
   /// Onboarding - Language selection (first screen)
   languageSelection('/language'),
 
   /// Onboarding - Welcome screen after language selection
   welcome('/welcome'),
+
+  // ============ Main App Routes ============
 
   /// Main dashboard showing today's tasks and goals
   dashboard('/dashboard'),
@@ -36,13 +54,24 @@ enum AppRoute {
   /// Check if this is the initial route (language selection for new users)
   bool get isInitial => this == AppRoute.languageSelection;
 
+  /// Check if this is an auth route
+  bool get isAuthRoute => [
+        AppRoute.login,
+        AppRoute.signUp,
+        AppRoute.passwordReset,
+        AppRoute.emailVerification,
+      ].contains(this);
+
   /// Check if this is an onboarding route
   bool get isOnboarding =>
       this == AppRoute.languageSelection || this == AppRoute.welcome;
 
+  /// Check if this route requires authentication
+  bool get requiresAuth => !isAuthRoute && !isOnboarding;
+
   /// Check if this route requires authentication/onboarding completion
   bool get requiresOnboardingComplete =>
-      !isOnboarding && this != AppRoute.languageSelection;
+      !isOnboarding && !isAuthRoute && this != AppRoute.languageSelection;
 
   /// Build the path with parameters substituted
   String buildPath({Map<String, String>? params}) {
